@@ -8,7 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 
@@ -32,8 +34,20 @@ public class SpringErrorApplication {
 		return "Hello " + name.toUpperCase();
 	}
 
+	@RequestMapping("/handled")
+	@ResponseBody
+	String handleError() {
+		String someLocalVariable = "stack locals";
+
+		try {
+			int number = 1/0;
+		} catch (Exception e) {
+			logger.error("Caught exception!", e);
+		}
+		return "SUCCESS";
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringErrorApplication.class, args);
 	}
-
 }

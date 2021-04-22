@@ -12,7 +12,7 @@ in `pom.xml` add the following configuration
     <version>1.7.30</version>
 </dependency>
 ```
-
+    
 Add configuration file to `SpringErrorApplication`
 
 ```
@@ -36,6 +36,19 @@ public class SpringErrorApplication {
 		return "Hello " + name.toUpperCase();
 	}
 
+	@RequestMapping("/handled")
+	@ResponseBody
+	String handleError() {
+		String someLocalVariable = "stack locals";
+
+		try {
+			int number = 1/0;
+		} catch (Exception e) {
+			logger.error("Caught exception!", e);
+		}
+		return "SUCCESS";
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringErrorApplication.class, args);
 	}
@@ -54,3 +67,11 @@ dsn=https://public:private@host:port/1
 ```
 mvn spring-boot:run
 ```
+
+THEN Call endpoint is,
+
+```
+http://localhost:8080/handled
+```
+
+AFTER show the success msg in browser and send error log to sentry.
