@@ -32,11 +32,6 @@ public class SpringErrorApplication {
 		return "Hello " + name.toUpperCase();
 	}
 
-//	@GetMapping
-//	public void index() {
-//		throw new NullPointerException();
-//	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(SpringErrorApplication.class, args);
 	}
